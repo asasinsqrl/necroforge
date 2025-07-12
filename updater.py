@@ -5,7 +5,7 @@ import shutil
 import sys
 import subprocess
 
-UPDATE_URL = "https://github.com/asasinsqrl/NecroForge/raw/main/necroforge.py"  # Replace with your URL
+UPDATE_URL = "https://github.com/asasinsqrl/NecroForge/raw/main/necroforge.py"
 CURRENT_FILE = sys.executable
 
 def update_necroforge():
@@ -19,8 +19,11 @@ def update_necroforge():
                 temp_path = CURRENT_FILE + ".tmp"
                 with open(temp_path, 'w', encoding='utf-8') as f:
                     f.write(latest_content)
-                # Spawn a new process to replace the file and exit
-                subprocess.Popen([sys.executable, temp_path, "--update"])
+                # Create a batch file to handle the move and restart
+                batch_content = f'@echo off\nping 127.0.0.1 -n 2 >nul\nmove /Y "{temp_path}" "{CURRENT_FILE}"\nstart "" "{CURRENT_FILE}"\nexit'
+                with open("update.bat", 'w') as batch_file:
+                    batch_file.write(batch_content)
+                subprocess.Popen(["update.bat"], shell=True)
                 sys.exit(0)
             else:
                 print("NecroForge is up to date.")
@@ -29,8 +32,10 @@ def update_necroforge():
 
 if __name__ == "__main__":
     if len(sys.argv) > 1 and sys.argv[1] == "--update":
-        # This runs when the temp file is executed to replace the original
-        shutil.move(sys.argv[0], CURRENT_FILE)
-        print("NecroForge updated. Please restart the application.")
+        try:
+            shutil.move(sys.argv[0], CURRENT_FILE)
+            print("NecroForge updated. Please restart the application.")
+        except Exception as e:
+            print(f"Update move failed: {str(e)}")
     else:
         update_necroforge()
