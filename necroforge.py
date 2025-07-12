@@ -10,7 +10,7 @@ import subprocess
 class NecroForgeApp:
     VERSION = "1.0.2"  # Updated version
 
-    UPDATE_URL = "https://github.com/wowte/NecroForge/raw/main/necroforge.py"  # Replace with your URL
+    UPDATE_URL = "https://github.com/asasinsqrl/NecroForge/raw/main/necroforge.py"  # Replace with your URL
     TEMPLATE_URL = "https://github.com/wowte/NecroForge/raw/main/templates.json"  # Optional
 
     def __init__(self, root):
