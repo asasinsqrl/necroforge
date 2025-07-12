@@ -8,7 +8,7 @@ import sys
 import subprocess
 
 class NecroForgeApp:
-    VERSION = "1.0.1"  # Updated version
+    VERSION = "1.0.2"  # Updated version
 
     UPDATE_URL = "https://github.com/wowte/NecroForge/raw/main/necroforge.py"  # Replace with your URL
     TEMPLATE_URL = "https://github.com/wowte/NecroForge/raw/main/templates.json"  # Optional
