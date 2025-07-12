@@ -2,7 +2,7 @@ import requests
 import hashlib
 import os
 
-UPDATE_URL = "https://github.com/yourusername/necroforge/raw/main/necroforge.py"  # Replace with your URL
+UPDATE_URL = "https://github.com/asasinsqrl/necroforge/raw/main/necroforge.py"  # Replace with your URL
 CURRENT_FILE = "necroforge.py"
 
 def update_necroforge():
