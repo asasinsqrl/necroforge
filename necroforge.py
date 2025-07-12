@@ -3,11 +3,15 @@ from tkinter import filedialog, messagebox
 import os
 import requests
 import hashlib
+import shutil
+import sys
+import subprocess
 
 class NecroForgeApp:
-    VERSION = "1.0.0"  # Track version for updates
-    UPDATE_URL = "https://github.com/asasinsqrl/necroforge/raw/main/necroforge.py"  # Replace with your GitHub URL
-    TEMPLATE_URL = "https://github.com/yourusername/necroforge/raw/main/templates.json"  # Optional, replace if used
+    VERSION = "1.0.1"  # Updated version
+
+    UPDATE_URL = "https://github.com/wowte/NecroForge/raw/main/necroforge.py"  # Replace with your URL
+    TEMPLATE_URL = "https://github.com/wowte/NecroForge/raw/main/templates.json"  # Optional
 
     def __init__(self, root):
         self.root = root
@@ -17,20 +21,23 @@ class NecroForgeApp:
         self.main_frame = tk.Frame(self.root)
         self.main_frame.grid(row=0, column=0, padx=10, pady=10, sticky="nsew")
 
-        tk.Label(self.main_frame, text="Select Input .txt File:", font=("Arial", 12)).grid(row=0, column=0, columnspan=2, pady=10, sticky="w")
+        # Add version label at the top
+        tk.Label(self.main_frame, text=f"NecroForge v{self.VERSION}", font=("Arial", 12, "bold"), fg="#4CAF50").grid(row=0, column=0, columnspan=2, pady=5, sticky="w")
+
+        tk.Label(self.main_frame, text="Select Input .txt File:", font=("Arial", 12)).grid(row=1, column=0, columnspan=2, pady=10, sticky="w")
         self.file_path_var = tk.StringVar()
-        tk.Entry(self.main_frame, textvariable=self.file_path_var, width=50).grid(row=1, column=0, pady=5, padx=5)
-        tk.Button(self.main_frame, text="Browse", command=self.browse_file, width=10).grid(row=1, column=1, pady=5, padx=5)
+        tk.Entry(self.main_frame, textvariable=self.file_path_var, width=50).grid(row=2, column=0, pady=5, padx=5)
+        tk.Button(self.main_frame, text="Browse", command=self.browse_file, width=10).grid(row=2, column=1, pady=5, padx=5)
 
-        tk.Label(self.main_frame, text="Output Directory:", font=("Arial", 12)).grid(row=2, column=0, columnspan=2, pady=10, sticky="w")
+        tk.Label(self.main_frame, text="Output Directory:", font=("Arial", 12)).grid(row=3, column=0, columnspan=2, pady=10, sticky="w")
         self.output_dir_var = tk.StringVar()
-        tk.Entry(self.main_frame, textvariable=self.output_dir_var, width=50).grid(row=3, column=0, pady=5, padx=5)
-        tk.Button(self.main_frame, text="Browse", command=self.browse_output_dir, width=10).grid(row=3, column=1, pady=5, padx=5)
+        tk.Entry(self.main_frame, textvariable=self.output_dir_var, width=50).grid(row=4, column=0, pady=5, padx=5)
+        tk.Button(self.main_frame, text="Browse", command=self.browse_output_dir, width=10).grid(row=4, column=1, pady=5, padx=5)
 
-        tk.Label(self.main_frame, text="Output Folder Name (optional):", font=("Arial", 12)).grid(row=4, column=0, columnspan=2, pady=10, sticky="w")
+        tk.Label(self.main_frame, text="Output Folder Name (optional):", font=("Arial", 12)).grid(row=5, column=0, columnspan=2, pady=10, sticky="w")
         self.folder_name_var = tk.StringVar()
-        tk.Entry(self.main_frame, textvariable=self.folder_name_var, width=50).grid(row=5, column=0, pady=5, padx=5)
-        tk.Label(self.main_frame, text="Leave blank to use input file name", font=("Arial", 10, "italic")).grid(row=6, column=0, columnspan=2, pady=2, sticky="w")
+        tk.Entry(self.main_frame, textvariable=self.folder_name_var, width=50).grid(row=6, column=0, pady=5, padx=5)
+        tk.Label(self.main_frame, text="Leave blank to use input file name", font=("Arial", 10, "italic")).grid(row=7, column=0, columnspan=2, pady=2, sticky="w")
 
         self.use_templates_var = tk.BooleanVar(value=True)
         tk.Checkbutton(
@@ -38,7 +45,7 @@ class NecroForgeApp:
             text="Use default templates for index.html, style.css, script.js",
             variable=self.use_templates_var,
             font=("Arial", 10)
-        ).grid(row=7, column=0, columnspan=2, pady=5, sticky="w")
+        ).grid(row=8, column=0, columnspan=2, pady=5, sticky="w")
 
         self.generate_button = tk.Button(
             self.main_frame,
@@ -50,9 +57,8 @@ class NecroForgeApp:
             bg="#4CAF50",
             fg="white"
         )
-        self.generate_button.grid(row=8, column=0, columnspan=2, pady=20)
+        self.generate_button.grid(row=9, column=0, columnspan=2, pady=20)
 
-        # Check for updates on startup
         self.check_for_updates()
 
     def browse_file(self):
@@ -76,9 +82,10 @@ class NecroForgeApp:
                 latest_hash = hashlib.md5(latest_content.encode()).hexdigest()
                 if local_hash != latest_hash:
                     if messagebox.askyesno("Update Available", "A new version of NecroForge is available. Update now?"):
-                        with open(__file__, 'w', encoding='utf-8') as f:
+                        temp_path = sys.executable + ".tmp"
+                        with open(temp_path, 'w', encoding='utf-8') as f:
                             f.write(latest_content)
-                        messagebox.showinfo("Update", "NecroForge updated. Please restart the application.")
+                        subprocess.Popen([sys.executable, temp_path, "--update"])
                         self.root.quit()
         except Exception as e:
             print(f"Update check failed: {str(e)}")
@@ -151,6 +158,10 @@ class NecroForgeApp:
             messagebox.showerror("Error", f"Failed to generate files: {str(e)}")
 
 if __name__ == "__main__":
-    root = tk.Tk()
-    app = NecroForgeApp(root)
-    root.mainloop()
+    if len(sys.argv) > 1 and sys.argv[1] == "--update":
+        shutil.move(sys.argv[0], sys.executable)
+        print("NecroForge updated. Please restart the application.")
+    else:
+        root = tk.Tk()
+        app = NecroForgeApp(root)
+        root.mainloop()
