@@ -16,6 +16,22 @@ notes.txt,This is a sample note.\nCreated with NecroForge!
 
 Note that the text script is in a single line with no spaces.
 
+To run NecroForge, double-click necroforge.exe. Use the "Check for Updates" button to download the latest version from https://github.com/asasinsqrl/NecroForge/releases.
+
+DEPENDENCIES(most of these come with the python install):
+
+import tkinter as tk
+from tkinter import filedialog, messagebox
+import os
+import requests
+import hashlib
+import shutil
+import sys
+import subprocess
+import platform
+import logging
+import time
+
 NecroForge - File Generation Tool
 ================================
 
