@@ -15,8 +15,8 @@ logging.basicConfig(filename='necroforge_update.log', level=logging.INFO,
                     format='%(asctime)s - %(levelname)s - %(message)s', filemode='a')
 
 class NecroForgeApp:
-    VERSION = "1.0.4"  # Incremented to differentiate from previous versions
-    UPDATE_URL ="https://githubusercontent.com/asasinsqrl/NecroForge/raw/main/necroforge.py"
+    VERSION = "1.0.4"  # Current version
+    UPDATE_URL = "https://raw.githubusercontent.com/asasinsqrl/NecroForge/main/necroforge.py"
     TEMPLATE_URL = "https://github.com/wowte/NecroForge/raw/main/templates.json"
     CURRENT_FILE = os.path.abspath(__file__)
 
@@ -304,7 +304,7 @@ if __name__ == "__main__":
             print(msg)
             logging.info(msg)
             # Restart the application without the --update flag
-            subprocess.Popen([sys.executable, NecroForgeApp.CURRENT_FILE])
+            subprocess.Popen([sys.executable, NecroForgeApp.CURRENT_FILE, "--updated"])
             sys.exit(0)
         except PermissionError as e:
             msg = f"Update failed: Insufficient permissions to overwrite {NecroForgeApp.CURRENT_FILE} ({str(e)})."
