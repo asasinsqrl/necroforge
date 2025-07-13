@@ -16,7 +16,7 @@ logging.basicConfig(filename='necroforge_update.log', level=logging.INFO,
 
 class NecroForgeApp:
     VERSION = "1.0.4"  # Incremented to differentiate from previous versions
-    UPDATE_URL ="https://raw.githubusercontent.com/asasinsqrl/NecroForge/main/necroforge.py"
+    UPDATE_URL ="https://githubusercontent.com/asasinsqrl/NecroForge/raw/main/necroforge.py"
     TEMPLATE_URL = "https://github.com/wowte/NecroForge/raw/main/templates.json"
     CURRENT_FILE = os.path.abspath(__file__)
 
