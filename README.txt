@@ -75,5 +75,5 @@ NOTE: The AI may be able to work around the image limitation by linking to an im
 
 
 
-If this tool is useless to  you, I'm sorry. If it's not, you're welcome.  :)
+If this tool is useless to you, I'm sorry. If it's not, you're welcome.  :)
 
