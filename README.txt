@@ -1,61 +1,130 @@
 THIS IS A TOOL CREATED BY AN AI FOR AIs. I instructed an AI to make this in order to streamline projects and avoid a lot of copypasta. It has worked well for me so far, but it needs to be tested to its limits. All you have to do is direct an AI that can create code to the GitHub repository and they should be able to work out what to do from there. But please know this is so far untested, so you might have to explain to them what the tool does in order for them to understand. They will have to make a .txt file in a certain way, detailed below. I made this in Windows, so no promises it will work elsewhere. Is NecroForge unique? No idea. Is it useful? That's for you to decide. It's free, so have fun. :)
 
-Here is an example of how the .txt file should look (ignore the red bars if you're viewing this in Notepad or similar.):
 
 
-# Example input.txt for NecroForge
-# Each line is: file_path,content
-# Use \n for newlines, keep content on one line per file
+Overview: NecroForge (v1.0.12) is a Python-based GUI application that automates the creation of multiple files, particularly for web development projects, from a single structured .txt input file. It uses a block-based format (FILE:, CONTENT:, ---) to generate files in a specified directory without requiring inline escaping of quotes or newlines. It includes a user-friendly interface, supports default or custom templates for web files (index.html, style.css, script.js), and offers a self-update feature (Windows only) to fetch the latest release from GitHub.Platform: Windows (self-update is Windows-only)
+Dependencies: Python 3.x, tkinter (included with Python), requests (install via pip install requests)
 
-index.html,<!DOCTYPE html><html><head><title>NecroForge Sample</title><link rel="stylesheet" href="css/style.css"></head><body><h1>Welcome!</h1></body></html>
-css/style.css,body { background-color: #1e1e1e; color: #fff; font-family: Arial, sans-serif; }\n.grid-container { display: grid; grid-template-columns: 1fr; }
-js/script.js,console.log("Sample script loaded");\nfunction greet() { alert("Hello!"); }
-config.json,{"app": "NecroForge", "version": "1.0.0"}
-data.csv,name,age,city\nJohn,25,Seattle\nJane,30,Chicago
-notes.txt,This is a sample note.\nCreated with NecroForge!
+Purpose: NecroForge streamlines file creation and project setup, ideal for:Web Development: Rapidly scaffolding projects with HTML, CSS, and JavaScript files.
+Prototyping: Generating file structures for testing or demos.
+Automation: Eliminating manual file creation for repetitive tasks.
+Learning/Testing: Providing a sample input file to explore the format.
 
-Note that the text script is in a single line with no spaces.
+It’s designed for developers or users who want an efficient, visual tool to create project file structures.FeaturesFile Generation:Parses a .txt file with blocks defining file paths (FILE:) and content (CONTENT:), separated by ---.
+Creates files in a user-specified output directory, supporting nested paths (e.g., css/style.css).
 
-To run NecroForge, double-click necroforge.exe. Use the "Check for Updates" button to download the latest version from https://github.com/asasinsqrl/NecroForge/releases.
+GUI Interface (via tkinter):Select input .txt file and output directory via file dialogs.
+Preview input file contents.
+Generate a sample input file for reference.
+Specify a custom output folder name (defaults to input file name without .txt).
+Option to use templates for empty index.html, style.css, or script.js files.
+Displays progress and errors.
 
-DEPENDENCIES(most of these come with the python install):
+Self-Update (Windows Only):Checks GitHub (https://api.github.com/repos/asasinsqrl/NecroForge/releases/latest) for updates.
+Downloads and replaces necroforge.exe if a newer version is available, then restarts.
 
-import tkinter as tk
-from tkinter import filedialog, messagebox
-import os
-import requests
-import hashlib
-import shutil
-import sys
-import subprocess
-import platform
-import logging
-import time
+Configuration:Saves input file and output directory in necroforge_config.json.
 
-NecroForge - File Generation Tool
-================================
+Logging:Logs actions and errors to necroforge_update.log.
 
-Welcome to NecroForge, a tool to generate text-based files from a.txt file!
+Security:Sanitizes file paths to prevent path traversal.
+Validates input format and CSS syntax (requires {}).
 
-Requirements:
-- Python 3.5+ installed on your system.
-- Run 'py -m pip install requests` to enable automatic updates (no quotes).
+InstallationEnsure Python 3.x is installed with tkinter.
+Install requests:bash
 
-How to Use:
-1. Place your.txt file in a folder of your choosing or browse to it using the GUI.
-2. Run necroforge.py (e.g., `py .\necroforge.py`).
-3. Select your input.txt, output directory, and folder name, then click "Generate Files".
-4. Uncheck "Use default templates" for custom content (e.g., web projects).
+pip install requests
 
-Update Process:
-- Run updater.py (e.g., `py .\updater.py`) to check for updates.
-- Or start necroforge.py; it will prompt you if an update is available.
-- Replace the UPDATE_URL in both scripts with your update source (e.g., GitHub raw URL).
+Download necroforge.pyw or necroforge.exe from GitHub.
+(Optional) Add custom templates (index.html, style.css, script.js) to a templates directory in the same folder as the script/executable.
+
+UsageLaunch:Run: python necroforge.pyw or double-click necroforge.exe (Windows).
+The GUI displays the version and options.
+
+Select Input File:Click "Browse" to choose a .txt file in the block-based format.
+Use "Preview Input" to check contents or "Create Sample Input" to generate a sample file.
+
+Select Output Directory:Click "Browse" to set the output directory.
+Optionally set a custom "Output Folder Name" (defaults to input file name).
+
+Configure Templates:Check "Use default templates" for empty web files.
+Custom templates can be placed in the templates directory.
+
+Generate Files:Click "Generate Files" to create files in the output directory.
+Progress and results appear in the GUI.
+
+Check Updates:Click "Check for Updates" to apply the latest version (Windows only).
+
+Input File FormatThe .txt file uses this structure:
+
+# Optional comment
+FILE: <relative/path/to/file>
+CONTENT:
+<content lines>
+---
+
+FILE: Relative path (e.g., index.html, css/style.css).
+CONTENT: File content, preserved as-is.
+---: Separates file blocks.
+
+Short Example Input File
+
+FILE: index.html
+CONTENT:
+<!DOCTYPE html>
+<html>
+<body>
+    <h1>Welcome</h1>
+</body>
+</html>
+---
+FILE: css/style.css
+CONTENT:
+body {
+    color: blue;
+}
+---
+
+Sample Input FileUse "Create Sample Input" to generate a more detailed example, such as:
+
+# Sample input file for NecroForge
+FILE: index.html
+CONTENT:
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sample</title>
+</head>
+<body>
+    <h1>Hello!</h1>
+</body>
+</html>
+---
+FILE: css/style.css
+CONTENT:
+body {
+    background-color: #f0f0f0;
+    font-family: Arial, sans-serif;
+}
+---
+FILE: js/script.js
+CONTENT:
+console.log("Sample script");
+---
+
+TemplatesIf "Use default templates" is enabled, empty files use default or custom templates from the templates directory.
+Default Templates:index.html: Basic HTML with {title} and {content} placeholders.
+style.css: Arial font styling.
+script.js: Console log.
+
+Custom templates can override defaults in the templates folder.
+
+LimitationsSelf-update is Windows-only (uses .exe and batch scripts).
+Input files must be UTF-8 or Latin-1 encoded.
+CSS files require valid {} syntax.
+BigBrain mode is not supported.
 
 
-
-Contact:
-- Report issues or suggest features to [your contact info].
 
 
 
