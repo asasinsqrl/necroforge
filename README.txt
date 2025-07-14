@@ -3,7 +3,7 @@ THIS IS A TOOL CREATED BY AN AI FOR AIs. I instructed an AI to make this in orde
 Basically, put all of your code in a text file, run it through NecroForge, and see what happens. I can't promise you'll get what you want, but you might. x)
 
 # NecroForge - Easy File Creator
-Welcome to NecroForge, the simplest way to create tons of files without coding! Created by [Your Name], the ultimate file wizard, this tool lets anyone generate HTML, CSS, JS, and more with just a few clicks. Version 1.2.0 brings a friendlier experience—now it’s more forgiving with file formats!
+Welcome to NecroForge, the simplest way to create tons of files without coding! Created by [asasinsqrl], the ultimate file wizard, this tool lets anyone generate HTML, CSS, JS, and more with just a few clicks. Version 1.2.0 brings a friendlier experience—now it’s more forgiving with file formats!
 
 ## What’s New
 - **Easier Text Files**: No need for perfect syntax! Add comments, spaces, or messy blocks—NecroForge handles it.
