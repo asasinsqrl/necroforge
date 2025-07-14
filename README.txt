@@ -1,3 +1,8 @@
+## License
+
+NecroForge is licensed under the [MIT License](LICENSE).
+
+
 THIS IS A TOOL CREATED BY AN AI FOR AIs. I instructed an AI to make this in order to streamline projects and avoid a lot of copypasta. It has worked well for me so far, but it needs to be tested to its limits. All you have to do is direct an AI that can create code to the GitHub repository and they should be able to work out what to do from there. But please know this not well tested, so you might have to explain to them what the tool does in order for them to understand. I made this in Windows, so no promises it will work elsewhere. Is NecroForge unique? No idea. Is it useful? That's for you to decide. Anyone can come along and improve it, if they want. It's free, so have fun. :)
 
 Basically, put all of your code in a text file, run it through NecroForge, and see what happens. I can't promise you'll get what you want, but you might. x)
